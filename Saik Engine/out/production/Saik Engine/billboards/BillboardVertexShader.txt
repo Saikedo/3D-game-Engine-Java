@@ -1,0 +1,46 @@
+#version 400 core
+
+in vec3 position;
+in vec2 textureCoordinates;
+
+out vec2 pass_textureCoordinates;
+
+uniform mat4 transformationMatrix;
+uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
+uniform bool constantSize;
+uniform float scale;
+uniform vec2 constantSizeDimensions;
+
+void main(void){
+
+    pass_textureCoordinates = textureCoordinates;
+
+    mat4 modelView = viewMatrix * transformationMatrix;
+    modelView[0][0] = 1;
+    modelView[0][1] = 0;
+    modelView[0][2] = 0;
+
+    modelView[1][0] = 0;
+    modelView[1][1] = 1;
+    modelView[1][2] = 0;
+
+    modelView[2][0] = 0;
+    modelView[2][1] = 0;
+    modelView[2][2] = 1;
+
+    vec3 newPos  = position;
+
+    gl_Position = projectionMatrix * modelView * vec4(newPos,1.0);
+
+    if(constantSize) {
+        gl_Position /= gl_Position.w;
+        gl_Position.xy += newPos.xy * vec2(constantSizeDimensions.x, constantSizeDimensions.y);
+    } else {
+        gl_Position.xy += position.xy * vec2(scale, scale);
+    }
+
+
+
+
+}

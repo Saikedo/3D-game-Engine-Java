@@ -157,6 +157,10 @@ public class MasterRenderer {
         GL11.glClearColor(mSkyColorRGB.x, mSkyColorRGB.y, mSkyColorRGB.z, 1);
     }
 
+    public Matrix4f getProjectionMatrix() {
+        return projectionMatrix;
+    }
+
     public void cleanUp() {
         shader.cleanUp();
         terrainShader.cleanUp();

@@ -11,6 +11,7 @@ import renderEngine.*;
 import terrains.Terrain;
 import textures.TerrainTexture;
 import textures.TerrainTexturePack;
+import toolbox.MousePicker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +124,7 @@ public class MainGameLoop {
         GuiRenderer guiRenderer = new GuiRenderer();
 
 
-
+        MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix());
 
         while(!Display.isCloseRequested()) {
             // Input handling
@@ -136,7 +137,16 @@ public class MainGameLoop {
             // Game logic
 
             // render
+
+
+
             camera.move();
+
+            picker.update();
+            Vector3f position = picker.getCurrentRay();
+            dragon.setPosition(position);
+            renderer.processEntity(dragon);
+
             renderer.processEntity(player);
 
 

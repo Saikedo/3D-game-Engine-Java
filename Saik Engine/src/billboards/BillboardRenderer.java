@@ -48,6 +48,9 @@ public class BillboardRenderer {
 
             unbindTexturedModel();
         }
+
+
+
     }
 
     private void prepareTexturedModel(BillboardTexturedModel model) {
